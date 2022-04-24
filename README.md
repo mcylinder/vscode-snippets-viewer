@@ -83,3 +83,6 @@ Press `F5` in VSCode to start Snippets Viewer extension debug session.
 Any & all test, code || feedback contributions are welcome.
 
 Open an issue || create a pull request to make this Snippets Viewer VSCode extension work better for all. 🤗
+
+## Revision History
+Added the option to block default snippets contained within the app. Activated in settings for 'user.'

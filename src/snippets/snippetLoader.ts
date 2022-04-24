@@ -209,7 +209,10 @@ export class SnippetLoader {
 						parsedSnippet.description, parsedSnippet.body, snippetFile);
 					snippets.push(snippet);
 				}
-				return resolve(snippets);
+
+				const filtSnips = snippets.filter(snippet =>
+					snippet.snippetFile.filePath.indexOf('Code.app') < (config.userOnly() ? 0 : 1000000000))
+				return resolve(filtSnips);
 			});
 		});
 	}

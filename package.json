@@ -1,267 +1,272 @@
 {
-	"name": "snippets-viewer",
-	"displayName": "Snippets Viewer",
-	"description": "VSCode Snippets Viewer",
-	"version": "1.10.0",
-	"categories": [
-		"Snippets",
-		"Other"
-	],
-	"keywords": [
-		"snippets",
-		"viewer",
-		"snippets tree view ⎇",
-		"snippet preview",
-		"view user snippets",
-		"view project snippets",
-		"view snippet file",
-		"view snippet definition",
-		"sort snippets",
-		"toggle snippets",
-		"group snippets",
-		"view snippet languages",
-		"skip language snippets"
-	],
-	"engines": {
-		"vscode": "^1.66.0"
-	},
-	"icon": "images/snippets-viewer.png",
-	"publisher": "RandomFractalsInc",
-	"author": "Taras Novak",
-	"contributors": [
-		"Taras Novak"
-	],
-	"license": "Apache-2.0",
-	"readme": "README.md",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/RandomFractals/vscode-snippets-viewer"
-	},
-	"bugs": "https://github.com/RandomFractals/vscode-snippets-viewer/issues",
-	"homepage": "https://github.com/RandomFractals/vscode-snippets-viewer/README.md",
-	"galleryBanner": {
-		"color": "#333",
-		"theme": "dark"
-	},
-	"activationEvents": [
-		"onCommand:snippets.viewer.combineLanguageSnippets",
-		"onCommand:snippets.viewer.skipLanguageSnippets",
-		"onCommand:snippets.viewer.groupSnippetsByFile",
-		"onCommand:snippets.viewer.sortSnippetsByName",
-		"onCommand:snippets.viewer.sortSnippetsByDefinitionOrder",
-		"onCommand:snippets.viewer.refreshSnippets",
-		"onCommand:snippets.viewer.openSnippetFile",
-		"onCommand:snippets.viewer.insertSnippet",
-		"onCommand:snippets.viewer.viewSettings",
-		"onView:snippets.view"
-	],
-	"main": "./dist/extension.js",
-	"contributes": {
-		"commands": [
-			{
-				"command": "snippets.viewer.combineLanguageSnippets",
-				"title": "Combine Language Snippets",
-				"category": "Snippets Viewer",
-				"icon": "$(chevron-down)"
-			},
-			{
-				"command": "snippets.viewer.skipLanguageSnippets",
-				"title": "Skip Language Snippets",
-				"category": "Snippets Viewer",
-				"icon": "$(filter)"
-			},
-			{
-				"command": "snippets.viewer.groupSnippetsByFile",
-				"title": "Group Snippets by File",
-				"category": "Snippets Viewer",
-				"icon": "$(chevron-right)"
-			},
-			{
-				"command": "snippets.viewer.sortSnippetsByName",
-				"title": "Sort Snippets by Name",
-				"category": "Snippets Viewer",
-				"icon": "$(arrow-down)"
-			},
-			{
-				"command": "snippets.viewer.sortSnippetsByDefinitionOrder",
-				"title": "Sort Snippets by Definition Order",
-				"category": "Snippets Viewer",
-				"icon": "$(ungroup-by-ref-type)"
-			},
-			{
-				"command": "snippets.viewer.refreshSnippets",
-				"title": "Refresh",
-				"category": "Snippets Viewer",
-				"icon": "$(refresh)"
-			},
-			{
-				"command": "snippets.viewer.openSnippetFile",
-				"title": "Open Snippet File",
-				"category": "Snippets Viewer",
-				"icon": "$(symbol-reference)"
-			},
-			{
-				"command": "snippets.viewer.insertSnippet",
-				"title": "Insert Snippet",
-				"category": "Snippets Viewer",
-				"icon": "$(export)"
-			},
-			{
-				"command": "snippets.viewer.viewSettings",
-				"title": "View Settings",
-				"category": "Snippets Viewer",
-				"icon": "$(gear)"
-			}
-		],
-		"menus": {
-			"view/title": [
-				{
-					"command": "snippets.viewer.combineLanguageSnippets",
-					"when": "view == snippets.view && !config.snippets.viewer.combineLanguageSnippets",
-					"group": "navigation"
-				},
-				{
-					"command": "snippets.viewer.groupSnippetsByFile",
-					"when": "view == snippets.view && config.snippets.viewer.combineLanguageSnippets",
-					"group": "navigation"
-				},
-				{
-					"command": "snippets.viewer.sortSnippetsByName",
-					"when": "view == snippets.view && !config.snippets.viewer.sortSnippetsByName",
-					"group": "navigation"
-				},
-				{
-					"command": "snippets.viewer.sortSnippetsByDefinitionOrder",
-					"when": "view == snippets.view && config.snippets.viewer.sortSnippetsByName",
-					"group": "navigation"
-				},
-				{
-					"command": "snippets.viewer.refreshSnippets",
-					"when": "view == snippets.view",
-					"group": "navigation"
-				},
-				{
-					"command": "snippets.viewer.viewSettings",
-					"when": "view == snippets.view",
-					"group": "navigation"
-				}
-			],
-			"view/item/context": [
-				{
-					"command": "snippets.viewer.openSnippetFile",
-					"when": "view == snippets.view && viewItem != snippetLanguage",
-					"group": "inline"
-				},
-				{
-					"command": "snippets.viewer.insertSnippet",
-					"when": "view == snippets.view && viewItem == snippet",
-					"group": "inline"
-				}
-			],
-			"commandPalette": [
-				{
-					"command": "snippets.viewer.openSnippetFile",
-					"when": "never"
-				},
-				{
-					"command": "snippets.viewer.insertSnippet",
-					"when": "never"
-				}
-			]
-		},
-		"viewsContainers": {
-			"activitybar": [
-				{
-					"id": "snippets-viewer",
-					"title": "Snippets Viewer",
-					"icon": "images/snippet-tree.svg"
-				}
-			]
-		},
-		"views": {
-			"snippets-viewer": [
-				{
-					"id": "snippets.view",
-					"name": "Snippets"
-				}
-			]
-		},
-		"viewsWelcome": [
-			{
-				"view": "snippets.view",
-				"contents": "Loading code snippets ..."
-			}
-		],
-		"configuration": {
-			"title": "Snippets Viewer",
-			"type": "object",
-			"properties": {
-				"snippets.viewer.showBuiltInExtensionSnippets": {
-					"type": "boolean",
-					"default": true,
-					"description": "Show built-in language extension snippets in the Snippets tree view."
-				},
-				"snippets.viewer.skipLanguageSnippets": {
-					"type": "string",
-					"default": "",
-					"description": "Comma delimited list of languages to skip snippets display in the Snippets tree view."
-				},
-				"snippets.viewer.combineLanguageSnippets": {
-					"type": "boolean",
-					"default": false,
-					"description": "Combine language snippets in the Snippets tree view."
-				},
-				"snippets.viewer.expandSnippetFiles": {
-					"type": "boolean",
-					"default": false,
-					"description": "Expand snippet files on snippet language tree node expand in the Snippets tree view."
-				},
-				"snippets.viewer.sortSnippetsByName": {
-					"type": "boolean",
-					"default": false,
-					"description": "Sort loaded snippets by name in the Snippets tree view."
-				},
-				"snippets.viewer.focusOnActiveEditorSnippets": {
-					"type": "boolean",
-					"default": false,
-					"description": "Focus on active editor snippets when the Snippets tree view is visible."
-				},
-				"snippets.viewer.showOnlyActiveEditorLanguageSnippets": {
-					"type": "boolean",
-					"default": false,
-					"description": "Show only active editor language snippets in the Snippets tree view."
-				}
-			}
-		}
-	},
-	"scripts": {
-		"vscode:prepublish": "npm run package",
-		"compile": "webpack",
-		"watch": "webpack --watch",
-		"package": "webpack --mode production --devtool hidden-source-map",
-		"test-compile": "tsc -p ./",
-		"test-watch": "tsc -watch -p ./",
-		"pretest": "npm run test-compile && npm run lint",
-		"lint": "eslint src --ext ts",
-		"test": "node ./out/test/runTest.js"
-	},
-	"devDependencies": {
-		"@types/glob": "^7.2.0",
-		"@types/mocha": "^9.1.0",
-		"@types/node": "^17.0.25",
-		"@types/vscode": "^1.66.0",
-		"@typescript-eslint/eslint-plugin": "^5.19.0",
-		"@typescript-eslint/parser": "^5.19.0",
-		"eslint": "^8.13.0",
-		"glob": "^8.0.1",
-		"mocha": "^9.2.2",
-		"ts-loader": "^9.2.8",
-		"typescript": "^4.6.3",
-		"vscode-test": "^1.6.1",
-		"webpack": "^5.72.0",
-		"webpack-cli": "^4.9.2"
-	},
-	"dependencies": {
-		"jsonc-parser": "^3.0.0"
-	}
+    "name": "snippets-viewer",
+    "displayName": "Snippets Viewer",
+    "description": "VSCode Snippets Viewer",
+    "version": "1.10.0",
+    "categories": [
+        "Snippets",
+        "Other"
+    ],
+    "keywords": [
+        "snippets",
+        "viewer",
+        "snippets tree view ⎇",
+        "snippet preview",
+        "view user snippets",
+        "view project snippets",
+        "view snippet file",
+        "view snippet definition",
+        "sort snippets",
+        "toggle snippets",
+        "group snippets",
+        "view snippet languages",
+        "skip language snippets"
+    ],
+    "engines": {
+        "vscode": "^1.66.0"
+    },
+    "icon": "images/snippets-viewer.png",
+    "publisher": "RandomFractalsInc",
+    "author": "Taras Novak",
+    "contributors": [
+        "Taras Novak"
+    ],
+    "license": "Apache-2.0",
+    "readme": "README.md",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/RandomFractals/vscode-snippets-viewer"
+    },
+    "bugs": "https://github.com/RandomFractals/vscode-snippets-viewer/issues",
+    "homepage": "https://github.com/RandomFractals/vscode-snippets-viewer/README.md",
+    "galleryBanner": {
+        "color": "#333",
+        "theme": "dark"
+    },
+    "activationEvents": [
+        "onCommand:snippets.viewer.combineLanguageSnippets",
+        "onCommand:snippets.viewer.skipLanguageSnippets",
+        "onCommand:snippets.viewer.groupSnippetsByFile",
+        "onCommand:snippets.viewer.sortSnippetsByName",
+        "onCommand:snippets.viewer.sortSnippetsByDefinitionOrder",
+        "onCommand:snippets.viewer.refreshSnippets",
+        "onCommand:snippets.viewer.openSnippetFile",
+        "onCommand:snippets.viewer.insertSnippet",
+        "onCommand:snippets.viewer.viewSettings",
+        "onView:snippets.view"
+    ],
+    "main": "./dist/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "snippets.viewer.combineLanguageSnippets",
+                "title": "Combine Language Snippets",
+                "category": "Snippets Viewer",
+                "icon": "$(chevron-down)"
+            },
+            {
+                "command": "snippets.viewer.skipLanguageSnippets",
+                "title": "Skip Language Snippets",
+                "category": "Snippets Viewer",
+                "icon": "$(filter)"
+            },
+            {
+                "command": "snippets.viewer.groupSnippetsByFile",
+                "title": "Group Snippets by File",
+                "category": "Snippets Viewer",
+                "icon": "$(chevron-right)"
+            },
+            {
+                "command": "snippets.viewer.sortSnippetsByName",
+                "title": "Sort Snippets by Name",
+                "category": "Snippets Viewer",
+                "icon": "$(arrow-down)"
+            },
+            {
+                "command": "snippets.viewer.sortSnippetsByDefinitionOrder",
+                "title": "Sort Snippets by Definition Order",
+                "category": "Snippets Viewer",
+                "icon": "$(ungroup-by-ref-type)"
+            },
+            {
+                "command": "snippets.viewer.refreshSnippets",
+                "title": "Refresh",
+                "category": "Snippets Viewer",
+                "icon": "$(refresh)"
+            },
+            {
+                "command": "snippets.viewer.openSnippetFile",
+                "title": "Open Snippet File",
+                "category": "Snippets Viewer",
+                "icon": "$(symbol-reference)"
+            },
+            {
+                "command": "snippets.viewer.insertSnippet",
+                "title": "Insert Snippet",
+                "category": "Snippets Viewer",
+                "icon": "$(export)"
+            },
+            {
+                "command": "snippets.viewer.viewSettings",
+                "title": "View Settings",
+                "category": "Snippets Viewer",
+                "icon": "$(gear)"
+            }
+        ],
+        "menus": {
+            "view/title": [
+                {
+                    "command": "snippets.viewer.combineLanguageSnippets",
+                    "when": "view == snippets.view && !config.snippets.viewer.combineLanguageSnippets",
+                    "group": "navigation"
+                },
+                {
+                    "command": "snippets.viewer.groupSnippetsByFile",
+                    "when": "view == snippets.view && config.snippets.viewer.combineLanguageSnippets",
+                    "group": "navigation"
+                },
+                {
+                    "command": "snippets.viewer.sortSnippetsByName",
+                    "when": "view == snippets.view && !config.snippets.viewer.sortSnippetsByName",
+                    "group": "navigation"
+                },
+                {
+                    "command": "snippets.viewer.sortSnippetsByDefinitionOrder",
+                    "when": "view == snippets.view && config.snippets.viewer.sortSnippetsByName",
+                    "group": "navigation"
+                },
+                {
+                    "command": "snippets.viewer.refreshSnippets",
+                    "when": "view == snippets.view",
+                    "group": "navigation"
+                },
+                {
+                    "command": "snippets.viewer.viewSettings",
+                    "when": "view == snippets.view",
+                    "group": "navigation"
+                }
+            ],
+            "view/item/context": [
+                {
+                    "command": "snippets.viewer.openSnippetFile",
+                    "when": "view == snippets.view && viewItem != snippetLanguage",
+                    "group": "inline"
+                },
+                {
+                    "command": "snippets.viewer.insertSnippet",
+                    "when": "view == snippets.view && viewItem == snippet",
+                    "group": "inline"
+                }
+            ],
+            "commandPalette": [
+                {
+                    "command": "snippets.viewer.openSnippetFile",
+                    "when": "never"
+                },
+                {
+                    "command": "snippets.viewer.insertSnippet",
+                    "when": "never"
+                }
+            ]
+        },
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "snippets-viewer",
+                    "title": "Snippets Viewer",
+                    "icon": "images/snippet-tree.svg"
+                }
+            ]
+        },
+        "views": {
+            "snippets-viewer": [
+                {
+                    "id": "snippets.view",
+                    "name": "Snippets"
+                }
+            ]
+        },
+        "viewsWelcome": [
+            {
+                "view": "snippets.view",
+                "contents": "Loading code snippets ..."
+            }
+        ],
+        "configuration": {
+            "title": "Snippets Viewer",
+            "type": "object",
+            "properties": {
+                "snippets.viewer.showBuiltInExtensionSnippets": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show built-in language extension snippets in the Snippets tree view."
+                },
+                "snippets.viewer.skipLanguageSnippets": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Comma delimited list of languages to skip snippets display in the Snippets tree view."
+                },
+                "snippets.viewer.combineLanguageSnippets": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Combine language snippets in the Snippets tree view."
+                },
+                "snippets.viewer.expandSnippetFiles": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Expand snippet files on snippet language tree node expand in the Snippets tree view."
+                },
+                "snippets.viewer.userOnly": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Restrict options to user only snippets in the Snippets tree view."
+                },
+                "snippets.viewer.sortSnippetsByName": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Sort loaded snippets by name in the Snippets tree view."
+                },
+                "snippets.viewer.focusOnActiveEditorSnippets": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Focus on active editor snippets when the Snippets tree view is visible."
+                },
+                "snippets.viewer.showOnlyActiveEditorLanguageSnippets": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Show only active editor language snippets in the Snippets tree view."
+                }
+            }
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run package",
+        "compile": "webpack",
+        "watch": "webpack --watch",
+        "package": "webpack --mode production --devtool hidden-source-map",
+        "test-compile": "tsc -p ./",
+        "test-watch": "tsc -watch -p ./",
+        "pretest": "npm run test-compile && npm run lint",
+        "lint": "eslint src --ext ts",
+        "test": "node ./out/test/runTest.js"
+    },
+    "devDependencies": {
+        "@types/glob": "^7.2.0",
+        "@types/mocha": "^9.1.0",
+        "@types/node": "^17.0.25",
+        "@types/vscode": "^1.66.0",
+        "@typescript-eslint/eslint-plugin": "^5.19.0",
+        "@typescript-eslint/parser": "^5.19.0",
+        "eslint": "^8.13.0",
+        "glob": "^8.0.1",
+        "mocha": "^9.2.2",
+        "ts-loader": "^9.2.8",
+        "typescript": "^4.6.3",
+        "vscode-test": "^1.6.1",
+        "webpack": "^5.72.0",
+        "webpack-cli": "^4.9.2"
+    },
+    "dependencies": {
+        "jsonc-parser": "^3.0.0"
+    }
 }

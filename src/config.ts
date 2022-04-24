@@ -41,6 +41,15 @@ export function expandSnippetFiles(): boolean {
 }
 
 /**
+ * Restrict snippets to user made only.
+ *
+ * @returns True to only show user snippets.
+ */
+ export function userOnly(): boolean {
+  return <boolean>getConfiguration().get('userOnly');
+}
+
+/**
  * Gets snippets sort order for the snippets tree view display.
  *
  * @returns True to sort snippets by name, and false to list them by definition order in snippet files.
